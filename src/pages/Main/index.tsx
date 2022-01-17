@@ -10,17 +10,13 @@ import { BASE_URL } from '../../adapter/xhr/restAPI'
 
 const MainPage: React.FC = (): JSX.Element => {
   const [values, setValues] = useState<any>({
-    id: null,
-    date_entry: '',
-    charge_nurse: '',
-    goal_for_today: '',
-    face_pain_rating: '',
+    date: '',
+    chargeNurse: '',
+    goalsForToday: '',
     precaution: '',
-    special_needs: '',
+    specialNeeds: '',
     comment: '',
-    any_question: '',
-    created_at: '',
-    updated_at: '',
+    questionAskDoctor: '',
   })
   const [mode, setMode] = useState('view') // view, edit
   const [seconds, setSeconds] = useState(0)
@@ -28,11 +24,11 @@ const MainPage: React.FC = (): JSX.Element => {
   useEffect(() => {
     if (mode === 'view') {
       axios
-        .get(`${BASE_URL}/information`)
+        .get(`${BASE_URL}/hospital/1`)
         .then(function (res: any) {
           setValues({
             ...res.data,
-            date_entry: res.data.date_entry.split('T')[0],
+            date: res.data.date.split('T')[0],
           })
         })
         .catch(function (err: any) {
@@ -50,15 +46,14 @@ const MainPage: React.FC = (): JSX.Element => {
 
   const handleSubmit = () => {
     axios
-      .post(`${BASE_URL}/updateInfomation`, {
-        date_entry: values.date_entry,
-        charge_nurse: values.charge_nurse,
-        goal_for_today: values.goal_for_today,
-        face_pain_rating: values.face_pain_rating,
+      .put(`${BASE_URL}/hospital/1`, {
+        date: values.date,
+        chargeNurse: values.chargeNurse,
+        goalsForToday: values.goalsForToday,
         precaution: values.precaution,
-        special_needs: values.special_needs,
+        specialNeeds: values.specialNeeds,
         comment: values.comment,
-        any_question: values.any_question,
+        questionAskDoctor: values.questionAskDoctor,
       })
       .then(function (res: any) {
         console.log(res)
@@ -120,8 +115,8 @@ const MainPage: React.FC = (): JSX.Element => {
               <div className={styles.inputBox}>
                 <input
                   type="date"
-                  value={values.date_entry}
-                  onChange={(e) => setValues({ ...values, date_entry: e.target.value })}
+                  value={values.date}
+                  onChange={(e) => setValues({ ...values, date: e.target.value })}
                   disabled={mode === 'view' ? true : false}
                 />
               </div>
@@ -135,8 +130,8 @@ const MainPage: React.FC = (): JSX.Element => {
               <div className={styles.inputBox}>
                 <input
                   type="text"
-                  value={values.charge_nurse}
-                  onChange={(e) => setValues({ ...values, charge_nurse: e.target.value })}
+                  value={values.chargeNurse}
+                  onChange={(e) => setValues({ ...values, chargeNurse: e.target.value })}
                   disabled={mode === 'view' ? true : false}
                 />
               </div>
@@ -150,8 +145,8 @@ const MainPage: React.FC = (): JSX.Element => {
               <div className={styles.inputBox}>
                 <input
                   type="text"
-                  value={values.goal_for_today}
-                  onChange={(e) => setValues({ ...values, goal_for_today: e.target.value })}
+                  value={values.goalsForToday}
+                  onChange={(e) => setValues({ ...values, goalsForToday: e.target.value })}
                   disabled={mode === 'view' ? true : false}
                 />
               </div>
@@ -185,7 +180,7 @@ const MainPage: React.FC = (): JSX.Element => {
             <div className={`row ${styles.groupInputTextArea}`}>
               <div className={styles.lableText}>
                 <p>ข้อควรระวัง :</p>
-                <label>(Precaution)</label>
+                <label>(precaution)</label>
               </div>
               <div className={styles.inputBox}>
                 <textarea
@@ -205,8 +200,8 @@ const MainPage: React.FC = (): JSX.Element => {
               <div className={styles.inputBox}>
                 <textarea
                   rows={2}
-                  value={values.special_needs}
-                  onChange={(e) => setValues({ ...values, special_needs: e.target.value })}
+                  value={values.specialNeeds}
+                  onChange={(e) => setValues({ ...values, specialNeeds: e.target.value })}
                   disabled={mode === 'view' ? true : false}
                 />
               </div>
@@ -235,8 +230,8 @@ const MainPage: React.FC = (): JSX.Element => {
               <div className={styles.inputBox}>
                 <textarea
                   rows={2}
-                  value={values.any_question}
-                  onChange={(e) => setValues({ ...values, any_question: e.target.value })}
+                  value={values.questionAskDoctor}
+                  onChange={(e) => setValues({ ...values, questionAskDoctor: e.target.value })}
                   disabled={mode === 'view' ? true : false}
                 />
               </div>
