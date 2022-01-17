@@ -19,7 +19,6 @@ const MainPage: React.FC = (): JSX.Element => {
     questionAskDoctor: '',
   })
   const [mode, setMode] = useState('view') // view, edit
-  const [seconds, setSeconds] = useState(0)
 
   useEffect(() => {
     if (mode === 'view') {
@@ -35,14 +34,7 @@ const MainPage: React.FC = (): JSX.Element => {
           console.log(err)
         })
     }
-  }, [mode, seconds])
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSeconds((seconds) => seconds + 1)
-    }, 10000)
-    return () => clearInterval(interval)
-  }, [])
+  }, [mode])
 
   const handleSubmit = () => {
     axios
