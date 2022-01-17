@@ -1,68 +1,40 @@
-import React, { useEffect, useState } from 'react'
-import styles from './index.module.scss'
-import axios from 'axios'
-import NavTopBarComponent from '../../component/NavTopBar'
-import ButtonComponent from '../../component/Button'
-import AllLevelSVG from './images/allLevel.svg'
-import Level1SVG from './images/level1.svg'
-import Img1SVG from './images/img1.svg'
-import { BASE_URL } from '../../adapter/xhr/restAPI'
+import React, { useEffect, useState } from "react";
+import styles from "./index.module.scss";
+import NavTopBarComponent from "../../component/NavTopBar";
+import ButtonComponent from "../../component/Button";
+import AllLevelSVG from "./images/allLevel.svg";
+import Level1SVG from "./images/level1.svg";
+import Img1SVG from "./images/img1.svg";
 
 const MainPage: React.FC = (): JSX.Element => {
   const [values, setValues] = useState<any>({
-    date: '',
-    chargeNurse: '',
-    goalsForToday: '',
-    precaution: '',
-    specialNeeds: '',
-    comment: '',
-    questionAskDoctor: '',
-  })
-  const [mode, setMode] = useState('view') // view, edit
-  const [seconds, setSeconds] = useState(0)
+    date: "",
+    chargeNurse: "",
+    goalsForToday: "",
+    precaution: "",
+    specialNeeds: "",
+    comment: "",
+    questionAskDoctor: "",
+  });
+  const [mode, setMode] = useState("view"); // view, edit
 
   useEffect(() => {
-    if (mode === 'view') {
-      axios
-        .get(`${BASE_URL}/hospital/1`)
-        .then(function (res: any) {
-          setValues({
-            ...res.data,
-            date: res.data.date.split('T')[0],
-          })
-        })
-        .catch(function (err: any) {
-          console.log(err)
-        })
+    if (mode === "view") {
+      setValues({
+        date: "2022-01-15",
+        chargeNurse: "พย.บ.สาวสวย ส้มตำอร่อย",
+        goalsForToday: "ขอให้หายดี",
+        precaution: "-",
+        specialNeeds: "ตำปูปลาล้า",
+        comment: "-",
+        questionAskDoctor: "ต้องนอนอีกกี่วันค่ะ",
+      });
     }
-  }, [mode, seconds])
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSeconds((seconds) => seconds + 1)
-    }, 10000)
-    return () => clearInterval(interval)
-  }, [])
+  }, []);
 
   const handleSubmit = () => {
-    axios
-      .put(`${BASE_URL}/hospital/1`, {
-        date: values.date,
-        chargeNurse: values.chargeNurse,
-        goalsForToday: values.goalsForToday,
-        precaution: values.precaution,
-        specialNeeds: values.specialNeeds,
-        comment: values.comment,
-        questionAskDoctor: values.questionAskDoctor,
-      })
-      .then(function (res: any) {
-        console.log(res)
-        setMode('view')
-      })
-      .catch(function (err: any) {
-        console.log(err.response)
-      })
-  }
+    setMode("view");
+  };
 
   return (
     <div className="layout-main">
@@ -73,17 +45,17 @@ const MainPage: React.FC = (): JSX.Element => {
         <div className={`row ${styles.header}`}>
           <h1>ห้องเลขที่ 101 VIP Suite</h1>
           <div className={`row ${styles.grpBtn}`}>
-            {mode === 'view' && (
+            {mode === "view" && (
               <ButtonComponent
                 _type="button"
                 _color="#3B76EF"
                 _variant="contained"
                 _text="แก้ไขข้อมูล"
                 _isIcon={false}
-                _functionOnClick={() => setMode('edit')}
+                _functionOnClick={() => setMode("edit")}
               />
             )}
-            {mode === 'edit' && (
+            {mode === "edit" && (
               <>
                 <ButtonComponent
                   _type="button"
@@ -91,7 +63,7 @@ const MainPage: React.FC = (): JSX.Element => {
                   _variant="outlined"
                   _text="ยกเลิก"
                   _isIcon={false}
-                  _functionOnClick={() => setMode('view')}
+                  _functionOnClick={() => setMode("view")}
                 />
                 <ButtonComponent
                   _type="button"
@@ -116,8 +88,10 @@ const MainPage: React.FC = (): JSX.Element => {
                 <input
                   type="date"
                   value={values.date}
-                  onChange={(e) => setValues({ ...values, date: e.target.value })}
-                  disabled={mode === 'view' ? true : false}
+                  onChange={(e) =>
+                    setValues({ ...values, date: e.target.value })
+                  }
+                  disabled={mode === "view" ? true : false}
                 />
               </div>
             </div>
@@ -131,8 +105,10 @@ const MainPage: React.FC = (): JSX.Element => {
                 <input
                   type="text"
                   value={values.chargeNurse}
-                  onChange={(e) => setValues({ ...values, chargeNurse: e.target.value })}
-                  disabled={mode === 'view' ? true : false}
+                  onChange={(e) =>
+                    setValues({ ...values, chargeNurse: e.target.value })
+                  }
+                  disabled={mode === "view" ? true : false}
                 />
               </div>
             </div>
@@ -146,8 +122,10 @@ const MainPage: React.FC = (): JSX.Element => {
                 <input
                   type="text"
                   value={values.goalsForToday}
-                  onChange={(e) => setValues({ ...values, goalsForToday: e.target.value })}
-                  disabled={mode === 'view' ? true : false}
+                  onChange={(e) =>
+                    setValues({ ...values, goalsForToday: e.target.value })
+                  }
+                  disabled={mode === "view" ? true : false}
                 />
               </div>
             </div>
@@ -160,7 +138,9 @@ const MainPage: React.FC = (): JSX.Element => {
 
             <div className={`col align-items-center`}>
               <h3 className={styles.levelPainful}>ระดับคะแนนความเจ็บปวด</h3>
-              <p className={styles.levelPainfulHint}>(Wong-Baker FACES Pain Rating Scale)</p>
+              <p className={styles.levelPainfulHint}>
+                (Wong-Baker FACES Pain Rating Scale)
+              </p>
             </div>
 
             <div className={`row ${styles.statusBox}`}>
@@ -171,7 +151,11 @@ const MainPage: React.FC = (): JSX.Element => {
               </div>
             </div>
 
-            <img className={styles.allLevelImg} src={AllLevelSVG} alt="AllLevelSVG" />
+            <img
+              className={styles.allLevelImg}
+              src={AllLevelSVG}
+              alt="AllLevelSVG"
+            />
           </div>
 
           <div className={styles.rightInput}>
@@ -186,8 +170,10 @@ const MainPage: React.FC = (): JSX.Element => {
                 <textarea
                   rows={2}
                   value={values.precaution}
-                  onChange={(e) => setValues({ ...values, precaution: e.target.value })}
-                  disabled={mode === 'view' ? true : false}
+                  onChange={(e) =>
+                    setValues({ ...values, precaution: e.target.value })
+                  }
+                  disabled={mode === "view" ? true : false}
                 />
               </div>
             </div>
@@ -201,8 +187,10 @@ const MainPage: React.FC = (): JSX.Element => {
                 <textarea
                   rows={2}
                   value={values.specialNeeds}
-                  onChange={(e) => setValues({ ...values, specialNeeds: e.target.value })}
-                  disabled={mode === 'view' ? true : false}
+                  onChange={(e) =>
+                    setValues({ ...values, specialNeeds: e.target.value })
+                  }
+                  disabled={mode === "view" ? true : false}
                 />
               </div>
             </div>
@@ -210,14 +198,18 @@ const MainPage: React.FC = (): JSX.Element => {
             <div className={`row ${styles.groupInputTextArea}`}>
               <div className={styles.lableText}>
                 <p>หากมีข้อเสนอแนะเพิ่มเติมสามารถติดต่อหัวหน้าแผนก :</p>
-                <label>(For any comment please contact head of department)</label>
+                <label>
+                  (For any comment please contact head of department)
+                </label>
               </div>
               <div className={styles.inputBox}>
                 <textarea
                   rows={2}
                   value={values.comment}
-                  onChange={(e) => setValues({ ...values, comment: e.target.value })}
-                  disabled={mode === 'view' ? true : false}
+                  onChange={(e) =>
+                    setValues({ ...values, comment: e.target.value })
+                  }
+                  disabled={mode === "view" ? true : false}
                 />
               </div>
             </div>
@@ -231,8 +223,10 @@ const MainPage: React.FC = (): JSX.Element => {
                 <textarea
                   rows={2}
                   value={values.questionAskDoctor}
-                  onChange={(e) => setValues({ ...values, questionAskDoctor: e.target.value })}
-                  disabled={mode === 'view' ? true : false}
+                  onChange={(e) =>
+                    setValues({ ...values, questionAskDoctor: e.target.value })
+                  }
+                  disabled={mode === "view" ? true : false}
                 />
               </div>
             </div>
@@ -240,7 +234,7 @@ const MainPage: React.FC = (): JSX.Element => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MainPage
+export default MainPage;
