@@ -1,0 +1,103 @@
+@font-face {
+  font-family: KanitRegular;
+  src: url('./fonts/Kanit-Regular.ttf');
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: KanitRegular;
+}
+
+body {
+  margin: 0;
+  font-family: KanitRegular;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; 
+}
+
+code {
+  font-family: KanitRegular;
+}
+
+h1, h2, h3, h4, h5, p {
+  margin: 0;
+}
+
+h1 {
+  font-size: 36px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.layout-main {
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: 30px 1fr 30px;
+  grid-template-rows: 60px 1fr;
+  grid-template-areas:
+    "header header header"
+    ". body .";
+
+  @media (min-width: 768px) {
+    grid-template-columns: 30px 768px 30px;
+    grid-template-rows: 60px 1fr;
+    grid-template-areas:
+      "header header header"
+      ". body .";
+  }
+
+  @media (min-width: 992px) {
+    grid-template-columns: 1fr  992px 1fr;
+    grid-template-rows: 60px 1fr auto;
+    grid-template-areas:
+      "header header header"
+      ". body ."
+      ". body .";
+  }
+
+  @media (min-width: 1200px) {
+    grid-template-columns: 1fr 1200px 1fr;
+    grid-template-rows: 60px 1fr auto;
+    grid-template-areas:
+      "header header header"
+      ". body ."
+      ". body .";
+  }
+
+  .header {
+    grid-area: header;
+    background-color: #3B76EF;
+  }
+
+  .main {
+    grid-area: body;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+  }
+}
+
+input[disabled], textarea[disabled] {
+  color: black !important;
+  opacity: 100%;
+}
