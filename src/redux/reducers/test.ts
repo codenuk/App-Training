@@ -10,8 +10,8 @@ interface IAction {
   }
   
   const initialState: IInitialState = {
-    username: 'ping',
-    password: 'password',
+    username: '',
+    password: '',
   }
   
   const reducer = (state = initialState, action: IAction): any => {
